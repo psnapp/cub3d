@@ -1,0 +1,13 @@
+*.DS_Store
+**/cmake-build-debug
+**/.idea
+test.c
+*a.out
+*.o
+*.a
+*.dylib
+cub3D
+cub3d__
+cub3d
+a.out.dSYM
+**/.vscode
