@@ -161,5 +161,7 @@ void	draw_all(t_parser *map)
 	//draw1(map, map->y1*PIX, map->x1*PIX, PIX);
 
 	raycasting(map);
+	if (map->sprite != NULL)
+		calc_sprite(map);
 	mlx_put_image_to_window(map->mlx, map->win, map->img, 0, 0);
 }

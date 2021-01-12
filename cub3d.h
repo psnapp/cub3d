@@ -41,13 +41,13 @@ typedef struct s_text
 	int 	h;
 }			t_text;
 
-typedef struct s_list
+typedef struct s_sprite
 {
-	struct s_list	*next;
+	struct s_sprite	*next;
 	int		sprite_x;
 	int 	sprite_y;
 	double	sprite_dist;
-}			t_list;
+}			t_sprite;
 
 typedef struct s_map
 {
@@ -67,6 +67,10 @@ typedef struct s_map
 	double 	ax;
 	double 	by;
 	double	dist1;
+
+	double	sprite_dir;
+	int 	sprite_x;
+	int 	sprite_y;
 
 	int		f_col;
 	int		c_col;
@@ -99,8 +103,9 @@ typedef struct s_map
 	t_text	tex1;
 	t_text	tex2;
 	t_text	tex3;
+	t_text	tex4;
 
-	t_list	sprite;
+	t_sprite	*sprite;
 
 }				t_parser;
 
@@ -136,5 +141,9 @@ int releas_manager(int key, t_parser *map);
 int	loop_manager(t_parser *map);
 int 	texture_mlx(t_parser *map);
 int 	tex(t_parser *map, double coef, int draw_start, int start);
+void 	sprite(t_parser *map);
+t_sprite 	*new_sprite(t_parser *map, int i, int j);
+int 	calc_sprite(t_parser *map);
+int 	draw_sprite(t_parser *map, t_sprite *tmp, double coef, int s_h);
 
 #endif

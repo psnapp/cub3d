@@ -32,6 +32,7 @@ int		main(int argc, char **argv)
 	map->addr = mlx_get_data_addr(map->img, &map->bits_per_pixel, &map->line_length,
 								  &map->endian);
 	texture_mlx(map);
+	sprite(map);
 	draw_all(map);
 	mlx_hook(map->win, 2, 1L, press_manager, map);
 	mlx_hook(map->win, 3, 1L << 1, releas_manager, map);

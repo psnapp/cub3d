@@ -67,7 +67,8 @@ add_executable(cub3d__
         parse_wh.c
         parser.c
         raycasting.c
-        raycasting_1.c)
+        raycasting_1.c
+        sprite.c)
 
 set_target_properties(${PROJECT_NAME}
         PROPERTIES

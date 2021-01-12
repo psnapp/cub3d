@@ -23,16 +23,16 @@ int		parser(t_parser *map)
 		{
 			parse_wh(map, line);
 		}
-		 else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
-		 	parse_so(map, line);
-		 else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
-		 	parse_n(map, line);
-		 else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
-		 	parse_w(map, line);
-		 else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
-		 	parse_e(map, line);
-		 else if (line[0] == 'S' && line[1] == ' ')
-		 	parse_s(map, line);
+		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
+			parse_so(map, line);
+		else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
+			parse_n(map, line);
+		else if (line[0] == 'W' && line[1] == 'E' && line[2] == ' ')
+			parse_w(map, line);
+		else if (line[0] == 'E' && line[1] == 'A' && line[2] == ' ')
+			parse_e(map, line);
+		else if (line[0] == 'S' && line[1] == ' ')
+			parse_s(map, line);
 		else if (line[0] == 'C' && line[1] == ' ')
 		{
 			flag = 'C';
