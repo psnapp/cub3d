@@ -47,6 +47,11 @@ typedef struct s_sprite
 	int		sprite_x;
 	int 	sprite_y;
 	double	sprite_dist;
+	double	sprite_dir;
+	double 	size;
+	double	h;
+	int 	x;
+	int 	y;
 }			t_sprite;
 
 typedef struct s_map
@@ -67,10 +72,6 @@ typedef struct s_map
 	double 	ax;
 	double 	by;
 	double	dist1;
-
-	double	sprite_dir;
-	int 	sprite_x;
-	int 	sprite_y;
 
 	int		f_col;
 	int		c_col;
@@ -106,6 +107,7 @@ typedef struct s_map
 	t_text	tex4;
 
 	t_sprite	*sprite;
+	char	**arr;
 
 }				t_parser;
 
@@ -143,7 +145,8 @@ int 	texture_mlx(t_parser *map);
 int 	tex(t_parser *map, double coef, int draw_start, int start);
 void 	sprite(t_parser *map);
 t_sprite 	*new_sprite(t_parser *map, int i, int j);
-int 	calc_sprite(t_parser *map);
-int 	draw_sprite(t_parser *map, t_sprite *tmp, double coef, int s_h);
+void 	calc_sprite(t_parser *map);
+int 	draw_sprite(t_parser *map, t_sprite *tmp);
+void	my_mlx_pixel_put_sprite(t_parser *map, int x, int y, int color);
 
 #endif

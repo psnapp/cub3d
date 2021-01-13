@@ -19,6 +19,6 @@ int 	texture_mlx(t_parser *map)
 													 &map->tex3.t_line_length, &map->tex3.t_endian);
 
 	map->tex4.t_img = mlx_xpm_file_to_image(map->mlx, map->str_s, &map->tex4.w, &map->tex4.h);
-	map->tex4.t_addr = (int *) mlx_get_data_addr(map->tex4.t_img, &map->tex4.t_bits_per_pixel, &map->tex4.t_line_length,
-												&map->tex4.t_endian);
+	map->tex4.t_addr = (int *) mlx_get_data_addr(map->tex4.t_img, &map->tex4.t_bits_per_pixel, &map->tex4.t_line_length, &map->tex4.t_endian);
+
 }
