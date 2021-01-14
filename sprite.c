@@ -62,82 +62,51 @@ void 	calc_sprite(t_parser *map)
 			tmp->sprite_dist = -1;
 		if (tmp->sprite_dist < 20)
 			tmp->sprite_dist = -1;
-		sort_sprite(map, tmp);
-		draw_sprite(map, tmp);
 		tmp = tmp->next;
+	}
+	sort_sprite(tmp);
+	draw_sprite(map);
+}
+
+void 	sort_sprite(t_parser *map)
+{
+	t_sprite	*tmp;
+	t_sprite	*data;
+
+	data = map->sprite;
+	tmp = map->sprite;
+	while (tmp->next != NULL)
+	{
+		if ()
 	}
 }
 
 
-
-//{
-//	t_sprite *tmp;
-//	int s_h;
-//	double coef;
-//
-//	tmp = map->sprite;
-//	while (tmp != NULL)
-//	{
-//		tmp->sprite_dist = sqrt(pow(tmp->sprite_x - map->x1, 2) +
-//								pow(tmp->sprite_y - map->y1, 2));
-//		s_h = (int) ((((map->width / 2.0) / tan(M_PI_6)) / (tmp->sprite_dist * CUB_SIZE) *
-//					  map->height));
-//		map->sprite_dir = atan2(tmp->sprite_y - map->y1, tmp->sprite_x - map->x1);
-//		coef = 64.0 / s_h;
-//		while (map->sprite_dir - map->p_angle > M_PI)
-//			map->sprite_dir -= 2 * M_PI;
-//		while (map->sprite_dir - map->p_angle < -M_PI)
-//			map->sprite_dir += 2 * M_PI;
-//		map->sprite_dir = map->sprite_dir - map->p_angle;
-//		map->sprite_x = map->sprite_dir * (map->width / 2) /
-//						(M_PI / 6) + map->width / 2 - s_h / 2;
-//		map->sprite_y = map->height / 2 - s_h / 2;
-//		draw_sprite(map, tmp, coef, s_h);
-//		tmp = tmp->next;
-//	}
-//}
-
-
-//	int h;
-//	int v;
-//	t_sprite	*tmp;
-//
-//	tmp = map->sprite;
-//	while (tmp != NULL)
-//	{
-//		tmp->sprite_dist = sqrt(pow(tmp->sprite_x - map->x1, 2) + pow(tmp->sprite_y - map->y1, 2));
-//		tmp->sprite_dir = atan2(tmp->sprite_y - map->y1, tmp->sprite_x - map->x1);
-//		while (tmp->sprite_dir - map->p_angle > M_PI)
-//			tmp->sprite_dir -= 2 * M_PI;
-//		while (tmp->sprite_dir - map->p_angle < -M_PI)
-//			tmp->sprite_dir += 2 * M_PI;
-//		tmp->size = map->height * CUB_SIZE / tmp->sprite_dist;
-//		h = (tmp->sprite_dir - map->p_angle) * map->width / M_PI_3 + map->width / 2 - tmp->size / 2;
-//		v = map->height / 2 - tmp->size / 2;
-//		draw_sprite(map, tmp, h, v);
-//		tmp = tmp->next;
-//	}
-//}
-
-int 	draw_sprite(t_parser *map, t_sprite *tmp)
+int 	draw_sprite(t_parser *map)
 {
 	int		x;
 	int 	y;
 	int color;
+	t_sprite	*tmp;
 
-	x = -1;
-	tmp->h = 64 / tmp->sprite_dist * 600;
-	tmp->size = tmp->h / map->tex4.w;
-	tmp->x = map->width / 2 - (map->width / M_PI_3) * tmp->sprite_dir - tmp->h / 2;
-	tmp->y = map->height / 2 - tmp->h / 2;
-	while (++x < tmp->h && (x + tmp->x) < map->width)
+	tmp = map->sprite;
+	while (tmp != NULL)
 	{
-		y = -1;
-		while (++y < tmp->h && (y + tmp->y) < map->height)
+		x = -1;
+		tmp->h = 64 / tmp->sprite_dist * 600;
+		tmp->size = tmp->h / map->tex4.w;
+		tmp->x = map->width / 2 - (map->width / M_PI_3) * tmp->sprite_dir - tmp->h / 2;
+		tmp->y = map->height / 2 - tmp->h / 2;
+		while (++x < tmp->h && (x + tmp->x) < map->width)
 		{
-			color = map->tex4.t_addr[(int) (y / tmp->size) * map->tex4.w + (int) (x / tmp->size) % map->tex4.h];
-			if (color > 0)
-				my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
+			y = -1;
+			while (++y < tmp->h && (y + tmp->y) < map->height)
+			{
+				color = map->tex4.t_addr[(int) (y / tmp->size) * map->tex4.w + (int) (x / tmp->size) % map->tex4.h];
+				if (color > 0)
+					my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
+			}
 		}
+		tmp = tmp->next;
 	}
 }

@@ -147,14 +147,6 @@ void            my_mlx_pixel_put(t_parser *map, int x, int y, int color)
 	}
 }
 
-void            my_mlx_pixel_put_sprite(t_parser *map, int x, int y, int color)
-{
-	char    *dst;
-
-	dst = map->addr + (y * map->line_length + x * (map->bits_per_pixel / 8));
-	*(unsigned int *) dst = color;
-}
-
 void	draw_all(t_parser *map)
 {
 	//ft_map_2d(map);

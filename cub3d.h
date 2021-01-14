@@ -146,7 +146,7 @@ int 	tex(t_parser *map, double coef, int draw_start, int start);
 void 	sprite(t_parser *map);
 t_sprite 	*new_sprite(t_parser *map, int i, int j);
 void 	calc_sprite(t_parser *map);
-int 	draw_sprite(t_parser *map, t_sprite *tmp);
-void	my_mlx_pixel_put_sprite(t_parser *map, int x, int y, int color);
+int 	draw_sprite(t_parser *map);
+void 	sort_sprite(t_parser *map);
 
 #endif
