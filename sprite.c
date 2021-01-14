@@ -83,16 +83,16 @@ void 	sort_sprite(t_parser *map)
 		{
 			if (tmp->sprite_dist > max)
 			{
-				tmp_max->sprite_dist = max;
+				max = tmp->sprite_dist;
 				tmp_max = tmp;
 			}
 			tmp = tmp->next;
 		}
-//		if (max != -1)
-//		{
+		if (max != -1)
+		{
 			draw_sprite(map, tmp_max);
-//			tmp_max = tmp_max->next;
-//		}
+			tmp_max->sprite_dist = -1;
+		}
 	}
 }
 
