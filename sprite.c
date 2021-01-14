@@ -64,49 +64,78 @@ void 	calc_sprite(t_parser *map)
 			tmp->sprite_dist = -1;
 		tmp = tmp->next;
 	}
-	sort_sprite(tmp);
-	draw_sprite(map);
+	sort_sprite(map);
 }
 
 void 	sort_sprite(t_parser *map)
 {
 	t_sprite	*tmp;
-	t_sprite	*data;
+	t_sprite	*tmp_max;
+	double		max;
 
-	data = map->sprite;
-	tmp = map->sprite;
-	while (tmp->next != NULL)
+	max = 0;
+
+	while (max != -1)
 	{
-		if ()
+		tmp = map->sprite;
+		max = -1;
+		while (tmp->next != NULL)
+		{
+			if (tmp->sprite_dist > max)
+			{
+				tmp_max->sprite_dist = max;
+				tmp_max = tmp;
+			}
+			tmp = tmp->next;
+		}
+//		if (max != -1)
+//		{
+			draw_sprite(map, tmp_max);
+//			tmp_max = tmp_max->next;
+//		}
 	}
 }
 
+//int		ft_swap(t_sprite **sprite, t_sprite *tmp, t_sprite *n)
+//{
+//	t_sprite 	*temp;
+//	t_sprite	*root;
+//
+//	root = *sprite;
+//	if (tmp == *sprite)
+//	{
+//		temp = n->next;
+//		n->next = tmp;
+//		tmp->next = temp;
+//		(*sprite) = n;
+//	}
+//	else
+//		while (root->next != tmp)
+//			root = root->next;
+//		temp = n->next;
+//		n->next = tmp;
+//		tmp->next = temp;
+//		root->next = n;
+//}
 
-int 	draw_sprite(t_parser *map)
+int 	draw_sprite(t_parser *map, t_sprite *tmp)
 {
 	int		x;
 	int 	y;
 	int color;
-	t_sprite	*tmp;
-
-	tmp = map->sprite;
-	while (tmp != NULL)
+	x = -1;
+	tmp->h = 64 / tmp->sprite_dist * 600;
+	tmp->size = tmp->h / map->tex4.w;
+	tmp->x = map->width / 2 - (map->width / M_PI_3) * tmp->sprite_dir - tmp->h / 2;
+	tmp->y = map->height / 2 - tmp->h / 2;
+	while (++x < tmp->h && (x + tmp->x) < map->width)
 	{
-		x = -1;
-		tmp->h = 64 / tmp->sprite_dist * 600;
-		tmp->size = tmp->h / map->tex4.w;
-		tmp->x = map->width / 2 - (map->width / M_PI_3) * tmp->sprite_dir - tmp->h / 2;
-		tmp->y = map->height / 2 - tmp->h / 2;
-		while (++x < tmp->h && (x + tmp->x) < map->width)
+		y = -1;
+		while (++y < tmp->h && (y + tmp->y) < map->height)
 		{
-			y = -1;
-			while (++y < tmp->h && (y + tmp->y) < map->height)
-			{
-				color = map->tex4.t_addr[(int) (y / tmp->size) * map->tex4.w + (int) (x / tmp->size) % map->tex4.h];
-				if (color > 0)
-					my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
-			}
+			color = map->tex4.t_addr[(int) (y / tmp->size) * map->tex4.w + (int) (x / tmp->size) % map->tex4.h];
+			if (color > 0)
+				my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
 		}
-		tmp = tmp->next;
 	}
 }

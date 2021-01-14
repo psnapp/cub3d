@@ -146,7 +146,7 @@ int 	tex(t_parser *map, double coef, int draw_start, int start);
 void 	sprite(t_parser *map);
 t_sprite 	*new_sprite(t_parser *map, int i, int j);
 void 	calc_sprite(t_parser *map);
-int 	draw_sprite(t_parser *map);
+int 	draw_sprite(t_parser *map, t_sprite *tmp);
 void 	sort_sprite(t_parser *map);
 
 #endif
