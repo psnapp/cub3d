@@ -75,6 +75,12 @@ void 	sort_sprite(t_parser *map)
 
 	max = 0;
 
+	tmp = map->sprite;
+	if (!tmp->next)
+	{
+		tmp_max = tmp;
+		draw_sprite(map, tmp_max);
+	}
 	while (max != -1)
 	{
 		tmp = map->sprite;
@@ -94,29 +100,9 @@ void 	sort_sprite(t_parser *map)
 			tmp_max->sprite_dist = -1;
 		}
 	}
+//	tmp = map->sprite;
+//	while (tm)
 }
-
-//int		ft_swap(t_sprite **sprite, t_sprite *tmp, t_sprite *n)
-//{
-//	t_sprite 	*temp;
-//	t_sprite	*root;
-//
-//	root = *sprite;
-//	if (tmp == *sprite)
-//	{
-//		temp = n->next;
-//		n->next = tmp;
-//		tmp->next = temp;
-//		(*sprite) = n;
-//	}
-//	else
-//		while (root->next != tmp)
-//			root = root->next;
-//		temp = n->next;
-//		n->next = tmp;
-//		tmp->next = temp;
-//		root->next = n;
-//}
 
 int 	draw_sprite(t_parser *map, t_sprite *tmp)
 {
@@ -137,5 +123,6 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 			if (color > 0)
 				my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
 		}
+
 	}
 }
