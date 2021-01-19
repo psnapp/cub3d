@@ -72,6 +72,7 @@ typedef struct s_map
 	double 	ax;
 	double 	by;
 	double	dist1;
+	int  *dist_wall;
 
 	int		f_col;
 	int		c_col;
@@ -148,5 +149,5 @@ t_sprite 	*new_sprite(t_parser *map, int i, int j);
 void 	calc_sprite(t_parser *map);
 int 	draw_sprite(t_parser *map, t_sprite *tmp);
 void 	sort_sprite(t_parser *map);
-
+int     check(t_parser *map);
 #endif

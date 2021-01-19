@@ -76,7 +76,7 @@ void	draw_walls(t_parser *map, int i, double dist, double start_angle)
 
 	begin = 0;
 
-
+    map->dist_wall[i] = dist;
 	dist = dist * cos(start_angle - map->p_angle);
 	column_h = (int)((((map->width / 2.0) / tan(M_PI_6)) / (dist * 64)) * map->height);
 	draw_start = map->height / 2 - (column_h / 2) ;

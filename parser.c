@@ -15,14 +15,11 @@
 int		parser(t_parser *map)
 {
 	char	*line;
-	char	flag;
 
 	while (get_next_line(map->fd, &line) > 0)
 	{
 		if (line[0] == 'R' && line[1] == ' ')
-		{
 			parse_wh(map, line);
-		}
 		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
 			parse_so(map, line);
 		else if (line[0] == 'N' && line[1] == 'O' && line[2] == ' ')
@@ -34,24 +31,22 @@ int		parser(t_parser *map)
 		else if (line[0] == 'S' && line[1] == ' ')
 			parse_s(map, line);
 		else if (line[0] == 'C' && line[1] == ' ')
-		{
-			flag = 'C';
-			parse_cf(map, line, flag);
-		}
+			parse_cf(map, line, 'C');
 		else if (line[0] == 'F' && line[1] == ' ')
-		{
-			flag = 'F';
-			parse_cf(map, line, flag);
-		}
+			parse_cf(map, line, 'F');
 		else if (line[0] == '1' || line[0] == ' ')
-		{
 			parse_map(map, line);
-		}
-		else
-		{
-			write(1, "invalid map\n", 12);
-			return (0);
-		}
 	}
+    check(map);
 	return (1);
+}
+
+int     check(t_parser *map)
+{
+    if (!map->str_s || !map->str_so || !map->str_ea || !map->str_no || !map->str_we || !map->map)
+    {
+        write(1, "invalid map\n", 12);
+        exit(0);
+    }
+    map->dist_wall = (int *)malloc(map->width * sizeof(int));
 }

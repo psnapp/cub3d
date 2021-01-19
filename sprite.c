@@ -112,7 +112,7 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 	x = -1;
 	tmp->h = 64 / tmp->sprite_dist * 600;
 	tmp->size = tmp->h / map->tex4.w;
-	tmp->x = map->width / 2 - (map->width / M_PI_3) * tmp->sprite_dir - tmp->h / 2;
+	tmp->x = map->width / 2 - (map->width / (M_PI / 3)) * tmp->sprite_dir - tmp->h / 2;
 	tmp->y = map->height / 2 - tmp->h / 2;
 	while (++x < tmp->h && (x + tmp->x) < map->width)
 	{
@@ -120,7 +120,7 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 		while (++y < tmp->h && (y + tmp->y) < map->height)
 		{
 			color = map->tex4.t_addr[(int) (y / tmp->size) * map->tex4.w + (int) (x / tmp->size) % map->tex4.h];
-			if (color > 0)
+			if (color > 0 && map->dist_wall[(int)(tmp->x + x)] > tmp->sprite_dist)
 				my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
 		}
 
