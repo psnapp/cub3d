@@ -100,8 +100,6 @@ void 	sort_sprite(t_parser *map)
 			tmp_max->sprite_dist = -1;
 		}
 	}
-//	tmp = map->sprite;
-//	while (tm)
 }
 
 int 	draw_sprite(t_parser *map, t_sprite *tmp)
@@ -110,7 +108,7 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 	int 	y;
 	int color;
 	x = -1;
-	tmp->h = 64 / tmp->sprite_dist * 600;
+	tmp->h = CUB_SIZE / tmp->sprite_dist * 600;
 	tmp->size = tmp->h / map->tex4.w;
 	tmp->x = map->width / 2 - (map->width / (M_PI / 3)) * tmp->sprite_dir - tmp->h / 2;
 	tmp->y = map->height / 2 - tmp->h / 2;

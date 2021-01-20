@@ -19,25 +19,25 @@ double	horizontal_raycasting(t_parser *map, double angle)
 	double xa_h;
 	double ya_h;
 
-	ya_h = 64;
-	xa_h = 64 / tan(angle);
+	ya_h = CUB_SIZE;
+	xa_h = CUB_SIZE / tan(angle);
 	if (angle > 0 && angle < M_PI || angle > M_PI * 2)
 	{
-		ay = (int)map->y1 / 64 * 64 - 0.0001;
+		ay = (int)map->y1 / CUB_SIZE * CUB_SIZE - 0.0001;
 		ya_h = -ya_h;
 	}
 
 	else
 	{
-		ay = (int)map->y1 / 64 * 64 + 64;
+		ay = (int)map->y1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
 		xa_h = -xa_h;
 	}
 
 	ax = map->x1 + (map->y1 - ay) / tan(angle);
 
-	if ((int)ay/64 >= 0 && (int)ay/64 < map->count && (int)ax/64 >= 0 && (int)ax/64 < 64)
+	if ((int)ay/CUB_SIZE >= 0 && (int)ay/CUB_SIZE < map->count && (int)ax/CUB_SIZE >= 0 && (int)ax/CUB_SIZE < map->max_line)
 	{
-		while ((int)(ay/64) < map->count && ay > 0 && ax > 0 && map->map[(int) (ay / 64)][(int) (ax / 64)] != '1')
+		while ((int)(ay/CUB_SIZE) < map->count && ay > 0 && ax > 0 && map->map[(int) (ay / CUB_SIZE)][(int) (ax / CUB_SIZE)] != '1')
 		{
 			ax += xa_h;
 			ay += ya_h;
@@ -54,24 +54,24 @@ double	vertical_raycasting(t_parser *map, double angle)
 	double xa_v;
 	double ya_v;
 
-	xa_v = 64;
-	ya_v = 64 * tan(angle);
+	xa_v = CUB_SIZE;
+	ya_v = CUB_SIZE * tan(angle);
 	if (angle > M_PI_2 && angle <= M_PI * 3 / 2)
 	{
-		bx = (int)map->x1 / 64 * 64 - 0.0001;
+		bx = (int)map->x1 / CUB_SIZE * CUB_SIZE - 0.0001;
 		xa_v = -xa_v;
 	}
 	else
 	{
-		bx = (int)map->x1 / 64 * 64 + 64;
+		bx = (int)map->x1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
 		ya_v = -ya_v;
 	}
 
 	by = map->y1 + (map->x1 - bx) * tan(angle);
 
-	if ((int)(by/64) >= 0 && (int)(by/64) < map->count && (int)(bx/64) >= 0 && (int)(bx/64) < 64)
+	if ((int)(by/CUB_SIZE) >= 0 && (int)(by/CUB_SIZE) < map->count && (int)(bx/CUB_SIZE) >= 0 && (int)(bx/CUB_SIZE) < map->max_line)
 	{
-		while ((int)(by/64) < map->count && by > 0 && bx > 0 && map->map[(int)by/64][(int)bx/64] != '1')
+		while ((int)(by/CUB_SIZE) < map->count && by > 0 && bx > 0 && map->map[(int)by/CUB_SIZE][(int)bx/CUB_SIZE] != '1')
 		{
 			bx = bx + xa_v;
 			by = by + ya_v;

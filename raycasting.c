@@ -55,25 +55,6 @@ int releas_manager(int key, t_parser *map)
 	return(1);
 }
 
-void	ft_map_2d(t_parser *map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < map->count)
-	{
-		j = 0;
-		while (map->map[i][j])
-		{
-			if (map->map[i][j] == '1')
-				draw(map, j*PIX, i*PIX, PIX);
-			j++;
-		}
-		i++;
-	}
-}
-
 void	ft_player_2d(t_parser *map)
 {
 	int i;
@@ -90,6 +71,8 @@ void	ft_player_2d(t_parser *map)
 			{
 				map->flag = map->map[i][j];
 				dir_player(map);
+				map->i = i;
+				map->j = j;
 				map->y1 = (i * CUB_SIZE) + (CUB_SIZE / 2);
 				map->x1 = (j * CUB_SIZE) + (CUB_SIZE / 2);
 			}
@@ -101,7 +84,6 @@ void	ft_player_2d(t_parser *map)
 
 int		key_press(t_parser *map)
 {
-//	mlx_destroy_image(map->mlx, map->img);	 // уничтожение картинки
 	if (map->key_s == 1)
 	{
 		map->x1 -= cos(map->p_angle) * 3;
@@ -149,16 +131,18 @@ void            my_mlx_pixel_put(t_parser *map, int x, int y, int color)
 
 void	draw_all(t_parser *map)
 {
-	//ft_map_2d(map);
-	 if (map->map[(int)map->y1/64][(int)map->x1/64] == '1')
+	if (!check_map(map->height, map->j, map->i, map->map))
+	{
+		write(1, "invalid map\n", 12);
+		exit(0);
+	}
+	 if (map->map[(int)map->y1/CUB_SIZE][(int)map->x1/CUB_SIZE] == '1')
 	 {
 	  	map->x1 = map->x;
 	  	map->y1 = map->y;
 	 }
 	 map->x = map->x1;
 	 map->y = map->y1;
-
-	//draw1(map, map->y1*PIX, map->x1*PIX, PIX);
 
 	raycasting(map);
 	if (map->sprite != NULL)

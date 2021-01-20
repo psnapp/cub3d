@@ -22,7 +22,6 @@ int		parse_map(t_parser *map, char *line)
 char		**ft_add_line_to_array(t_parser *map, char *line)
 {
 	char	**arr;
-	int		j;
 	int		i;
 
 	i = 0;
@@ -34,6 +33,7 @@ char		**ft_add_line_to_array(t_parser *map, char *line)
 		arr[i] = map->map[i];
 		i++;
 	}
+	map->max_line = ft_strlen(line);
 	arr[i] = line;
 	return(arr);
 }

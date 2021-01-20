@@ -37,7 +37,7 @@ int		parser(t_parser *map)
 		else if (line[0] == '1' || line[0] == ' ')
 			parse_map(map, line);
 	}
-    check(map);
+	check(map);
 	return (1);
 }
 
@@ -49,4 +49,26 @@ int     check(t_parser *map)
         exit(0);
     }
     map->dist_wall = (int *)malloc(map->width * sizeof(int));
+}
+
+int		check_map(int h, int x, int y, char **map_check)
+{
+	if ((x > ft_strlen(map_check[y]) - 1) || map_check[y][x] == ' ')
+		return (0);
+	if (map_check[y][x] == '1')
+		return (1);
+	else if (y == 0 || y == h || x == 0 || (size_t)x == ft_strlen(map_check[y]) - 1)
+		return (0);
+	if (map_check[y][x] == '*')
+		return (1);
+	map_check[y][x] = '*';
+	if (!(check_map(h, x + 1, y, map_check)))
+		return (0);
+	if (!(check_map(h, x - 1, y, map_check)))
+		return (0);
+	if (!(check_map(h, x, y - 1, map_check)))
+		return (0);
+	if (!(check_map(h, x, y - 1, map_check)))
+		return (0);
+	return (1);
 }

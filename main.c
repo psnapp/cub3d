@@ -34,6 +34,8 @@ int		main(int argc, char **argv)
 	texture_mlx(map);
 	sprite(map);
 	draw_all(map);
+	if (argc == 3)
+		screenshot(map);
 	mlx_hook(map->win, 2, 1L, press_manager, map);
 	mlx_hook(map->win, 3, 1L << 1, releas_manager, map);
 	mlx_loop_hook(map->mlx, loop_manager, map);

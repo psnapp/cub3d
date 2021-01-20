@@ -28,5 +28,8 @@ int		ft_valid_args(int argc, char **argv)
 		write (1, "Error: Invalid argument\n", 24);
 		return (0);
 	}
+	if (argc == 3)
+		if (argv[2][0] != '-' || argv[2][1] != '-' || argv[2][2] != 's' || argv[2][3] != 'a' || argv[2][4] != 'v' || argv[2][5] != 'e')
+			return (0);
 	return (1);
 }

@@ -61,6 +61,7 @@ typedef struct s_map
 	int		fd;
 	int		width;
 	int		height;
+	int 	max_line;
 
 
 	char		flag;
@@ -85,6 +86,8 @@ typedef struct s_map
 	double		y;
 	double		x1;
 	double		y1;
+	int 	i;
+	int 	j;
 
 	char	*addr;
    	int		bits_per_pixel;
@@ -150,4 +153,9 @@ void 	calc_sprite(t_parser *map);
 int 	draw_sprite(t_parser *map, t_sprite *tmp);
 void 	sort_sprite(t_parser *map);
 int     check(t_parser *map);
+int		check_map(int h, int x, int y, char **map);
+int 	screenshot(t_parser *map);
+void 	ft_header(unsigned char *header, int size, t_parser *map, int tmp);
+void 	screen(t_parser *map, int fd, int tmp);
+
 #endif
