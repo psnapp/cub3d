@@ -18,8 +18,8 @@ t_sprite	*new_sprite(t_parser *map, int i, int j)
 		tmp->next = new;
 	}
 	new->next = NULL;
-	new->sprite_x = i * CUB_SIZE + CUB_SIZE / 2;
-	new->sprite_y = j * CUB_SIZE + CUB_SIZE / 2;
+	new->sprite_x = j * CUB_SIZE + CUB_SIZE / 2;
+	new->sprite_y = i * CUB_SIZE + CUB_SIZE / 2;
 	new->sprite_dist = 0;
 	return (new);
 }
@@ -85,7 +85,7 @@ void 	sort_sprite(t_parser *map)
 	{
 		tmp = map->sprite;
 		max = -1;
-		while (tmp->next != NULL)
+		while (tmp != NULL)
 		{
 			if (tmp->sprite_dist > max)
 			{
@@ -107,6 +107,7 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 	int		x;
 	int 	y;
 	int color;
+
 	x = -1;
 	tmp->h = CUB_SIZE / tmp->sprite_dist * 600;
 	tmp->size = tmp->h / map->tex4.w;
@@ -121,6 +122,5 @@ int 	draw_sprite(t_parser *map, t_sprite *tmp)
 			if (color > 0 && map->dist_wall[(int)(tmp->x + x)] > tmp->sprite_dist)
 				my_mlx_pixel_put(map, tmp->x + x, tmp->y + y, color);
 		}
-
 	}
 }
