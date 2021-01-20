@@ -26,4 +26,6 @@ void	ft_init_struct(t_parser *map)
 	map->str_no = NULL;
 	map->tex.w = 0;
 	map->tex.h = 0;
+	map->k = 0;
+	map->max = 0;
 }

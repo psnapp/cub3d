@@ -12,12 +12,12 @@
 
 #include "cub3d.h"
 
-int     parse_wh(t_parser *map, char *line)
+int		parse_wh(t_parser *map, char *line)
 {
-    int i;
+	int i;
 
-    i = 1;
-    while (line[i] == ' ')
+	i = 1;
+	while (line[i] == ' ')
 		i++;
 	while (line[i] >= '0' && line[i] <= '9')
 	{
@@ -37,5 +37,6 @@ int     parse_wh(t_parser *map, char *line)
 		i++;
 	if (line[i] != '\0' || map->width < 0 || map->height < 0)
 		return (0);
-    return (1);
+	free(line);
+	return (1);
 }

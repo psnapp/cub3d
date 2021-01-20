@@ -18,18 +18,20 @@ int		ft_valid_args(int argc, char **argv)
 
 	if (argc < 2 || argc > 3)
 	{
-		write (1, "Error: Invalid number of arguments\n", 35);
+		write(1, "Error: Invalid number of arguments\n", 35);
 		return (0);
 	}
 	len = ft_strlen(argv[1]);
 	len = len - 4;
-	if (argv[1][len] != '.' || argv[1][len + 1] != 'c' || argv[1][len + 2] != 'u' || argv[1][len + 3] != 'b' || argv[1][len + 4] != '\0')
+	if (argv[1][len] != '.' || argv[1][len + 1] != 'c' || argv[1][len + 2]
+	!= 'u' || argv[1][len + 3] != 'b' || argv[1][len + 4] != '\0')
 	{
-		write (1, "Error: Invalid argument\n", 24);
+		write(1, "Error: Invalid argument\n", 24);
 		return (0);
 	}
 	if (argc == 3)
-		if (argv[2][0] != '-' || argv[2][1] != '-' || argv[2][2] != 's' || argv[2][3] != 'a' || argv[2][4] != 'v' || argv[2][5] != 'e')
+		if (argv[2][0] != '-' || argv[2][1] != '-' || argv[2][2] != 's'
+		|| argv[2][3] != 'a' || argv[2][4] != 'v' || argv[2][5] != 'e')
 			return (0);
 	return (1);
 }

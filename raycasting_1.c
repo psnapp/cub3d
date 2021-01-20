@@ -12,109 +12,110 @@
 
 #include "cub3d.h"
 
-double	horizontal_raycasting(t_parser *map, double angle)
+double		horizontal_raycasting(t_parser *map, double angle, int c)
 {
-	double ay;
-	double ax;
-	double xa_h;
-	double ya_h;
-
-	ya_h = CUB_SIZE;
-	xa_h = CUB_SIZE / tan(angle);
+	map->ya_h = CUB_SIZE;
+	map->xa_h = CUB_SIZE / tan(angle);
 	if (angle > 0 && angle < M_PI || angle > M_PI * 2)
 	{
-		ay = (int)map->y1 / CUB_SIZE * CUB_SIZE - 0.0001;
-		ya_h = -ya_h;
+		map->ay = (int)map->y1 / CUB_SIZE * CUB_SIZE - 0.0001;
+		map->ya_h = -map->ya_h;
 	}
-
 	else
 	{
-		ay = (int)map->y1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
-		xa_h = -xa_h;
+		map->ay = (int)map->y1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
+		map->xa_h = -map->xa_h;
 	}
-
-	ax = map->x1 + (map->y1 - ay) / tan(angle);
-
-	if ((int)ay/CUB_SIZE >= 0 && (int)ay/CUB_SIZE < map->count && (int)ax/CUB_SIZE >= 0 && (int)ax/CUB_SIZE < map->max_line)
+	map->axx = map->x1 + (map->y1 - map->ay) / tan(angle);
+	if ((int)map->ay / CUB_SIZE >= 0 && (int)map->ay / CUB_SIZE < c &&
+	(int)map->axx / CUB_SIZE >= 0 && (int)map->axx / CUB_SIZE < map->max_line)
 	{
-		while ((int)(ay/CUB_SIZE) < map->count && ay > 0 && ax > 0 && map->map[(int) (ay / CUB_SIZE)][(int) (ax / CUB_SIZE)] != '1')
+		while ((int)(map->ay / CUB_SIZE) < c && map->ay > 0 && map->axx > 0 &&
+		map->map[(int)(map->ay / CUB_SIZE)][(int)(map->axx / CUB_SIZE)] != '1')
 		{
-			ax += xa_h;
-			ay += ya_h;
+			map->axx += map->xa_h;
+			map->ay += map->ya_h;
 		}
 	}
-	map->ax = ax;
-	return (sqrt((pow(map->x1 - ax, 2)) + pow(map->y1 - ay, 2)));
+	map->ax = map->axx;
+	return (sqrt((pow(map->x1 - map->ax, 2)) + pow(map->y1 - map->ay, 2)));
 }
 
-double	vertical_raycasting(t_parser *map, double angle)
+double		vertical_raycasting(t_parser *map, double angle, int c)
 {
-	double by;
-	double bx;
-	double xa_v;
-	double ya_v;
-
-	xa_v = CUB_SIZE;
-	ya_v = CUB_SIZE * tan(angle);
+	map->xa_v = CUB_SIZE;
+	map->ya_v = CUB_SIZE * tan(angle);
 	if (angle > M_PI_2 && angle <= M_PI * 3 / 2)
 	{
-		bx = (int)map->x1 / CUB_SIZE * CUB_SIZE - 0.0001;
-		xa_v = -xa_v;
+		map->bx = (int)map->x1 / CUB_SIZE * CUB_SIZE - 0.0001;
+		map->xa_v = -map->xa_v;
 	}
 	else
 	{
-		bx = (int)map->x1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
-		ya_v = -ya_v;
+		map->bx = (int)map->x1 / CUB_SIZE * CUB_SIZE + CUB_SIZE;
+		map->ya_v = -map->ya_v;
 	}
-
-	by = map->y1 + (map->x1 - bx) * tan(angle);
-
-	if ((int)(by/CUB_SIZE) >= 0 && (int)(by/CUB_SIZE) < map->count && (int)(bx/CUB_SIZE) >= 0 && (int)(bx/CUB_SIZE) < map->max_line)
+	map->byy = map->y1 + (map->x1 - map->bx) * tan(angle);
+	if ((int)(map->byy / CUB_SIZE) >= 0 && (int)(map->byy / CUB_SIZE) < c &&
+	(int)(map->bx / CUB_SIZE) >= 0 && (int)(map->bx / CUB_SIZE) < map->max_line)
 	{
-		while ((int)(by/CUB_SIZE) < map->count && by > 0 && bx > 0 && map->map[(int)by/CUB_SIZE][(int)bx/CUB_SIZE] != '1')
+		while ((int)(map->byy / CUB_SIZE) < c && map->byy > 0 && map->bx > 0 &&
+		map->map[(int)map->byy / CUB_SIZE][(int)map->bx / CUB_SIZE] != '1')
 		{
-			bx = bx + xa_v;
-			by = by + ya_v;
+			map->bx = map->bx + map->xa_v;
+			map->byy = map->byy + map->ya_v;
 		}
 	}
-	map->by = by;
-	return (sqrt(pow(map->x1 - bx, 2) + pow(map->y1 - by, 2)));
+	map->by = map->byy;
+	return (sqrt(pow(map->x1 - map->bx, 2) + pow(map->y1 - map->byy, 2)));
 }
 
-void	raycasting(t_parser *map)
+void		raycasting(t_parser *map)
 {
 	double start_angle;
-	int k;
-	k = 0;
+
+	map->k = 0;
+	start_angle = ft_angle(map);
+	while (start_angle > (map->p_angle - M_PI_6))
+	{
+		map->sv = vertical_raycasting(map, start_angle, map->count);
+		map->sh = horizontal_raycasting(map, start_angle, map->count);
+		ft_sh_sv(map, start_angle);
+		start_angle -= M_PI_3 / map->width;
+		map->k++;
+	}
+}
+
+double		ft_angle(t_parser *map)
+{
+	double start_angle;
 
 	if (map->p_angle > 2 * M_PI)
 		map->p_angle -= 2 * M_PI;
 	if (map->p_angle < 0)
 		map->p_angle += 2 * M_PI;
 	start_angle = map->p_angle + M_PI_6;
-	while (start_angle > (map->p_angle - M_PI_6))
+	return (start_angle);
+}
+
+void		ft_sh_sv(t_parser *map, double start_angle)
+{
+	if (map->sh > map->sv)
 	{
-		double sv = vertical_raycasting(map, start_angle);
-		double sh = horizontal_raycasting(map, start_angle);
-		if (sh > sv)
-		{
-			map->dist1 = map->by;
-			if (start_angle > M_PI_2 && start_angle < M_PI_2 + M_PI)
-				map->flag = 'W';
-			else
-				map->flag = 'E';
-			draw_walls(map, k, sv, start_angle);
-		}
+		map->dist1 = map->by;
+		if (start_angle > M_PI_2 && start_angle < M_PI_2 + M_PI)
+			map->flag = 'W';
 		else
-		{
-			map->dist1 = map->ax;
-			if ((start_angle > 0 && start_angle < M_PI) || start_angle > 2 * M_PI)
-				map->flag = 'N';
-			else
-				map->flag = 'S';
-			draw_walls(map, k, sh, start_angle);
-		}
-		start_angle -= M_PI_3 / map->width;
-		k++;
+			map->flag = 'E';
+		draw_walls(map, map->sv, start_angle);
+	}
+	else
+	{
+		map->dist1 = map->ax;
+		if ((start_angle > 0 && start_angle < M_PI) || start_angle > 2 * M_PI)
+			map->flag = 'N';
+		else
+			map->flag = 'S';
+		draw_walls(map, map->sh, start_angle);
 	}
 }

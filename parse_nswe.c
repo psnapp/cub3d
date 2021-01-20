@@ -3,7 +3,7 @@
 int		parse_so(t_parser *map, char *line)
 {
 	int		i;
-	int 	k;
+	int		k;
 
 	i = 2;
 	k = 0;
@@ -18,12 +18,13 @@ int		parse_so(t_parser *map, char *line)
 		k++;
 	}
 	map->str_so[k] = '\0';
+	free(line);
 }
 
 int		parse_n(t_parser *map, char *line)
 {
 	int		i;
-	int 	k;
+	int		k;
 
 	i = 2;
 	k = 0;
@@ -38,12 +39,13 @@ int		parse_n(t_parser *map, char *line)
 		k++;
 	}
 	map->str_no[k] = '\0';
+	free(line);
 }
 
 int		parse_w(t_parser *map, char *line)
 {
 	int		i;
-	int 	k;
+	int		k;
 
 	i = 2;
 	k = 0;
@@ -58,12 +60,13 @@ int		parse_w(t_parser *map, char *line)
 		k++;
 	}
 	map->str_we[k] = '\0';
+	free(line);
 }
 
 int		parse_e(t_parser *map, char *line)
 {
 	int		i;
-	int 	k;
+	int		k;
 
 	i = 2;
 	k = 0;
@@ -78,12 +81,13 @@ int		parse_e(t_parser *map, char *line)
 		k++;
 	}
 	map->str_ea[k] = '\0';
+	free(line);
 }
 
 int		parse_s(t_parser *map, char *line)
 {
 	int		i;
-	int 	k;
+	int		k;
 
 	i = 1;
 	k = 0;
@@ -98,4 +102,5 @@ int		parse_s(t_parser *map, char *line)
 		k++;
 	}
 	map->str_s[k] = '\0';
+	free(line);
 }

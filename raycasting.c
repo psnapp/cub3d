@@ -12,49 +12,6 @@
 
 #include "cub3d.h"
 
-int	loop_manager(t_parser *map)
-{
-	key_press(map);
-	draw_all(map);
-	return(1);
-}
-
-int  press_manager(int key, t_parser *map)
-{
-	if (key == 123 )
-		map->key_123 = 1;
-	if (key == 124 )
-		map->key_124 = 1;
-	if (key == 53)
-		map->key_ex = 1;
-	if (key == 1 )
-		map->key_s = 1;
-	if (key == 13)
-		map->key_w = 1;
-	if (key == 2)
-		map->key_right = 1;
-	if (key == 0)
-		map->key_left = 1;
-	return(1);
-}
-
-int releas_manager(int key, t_parser *map)
-{
-	if (key == 123 && map->key_123== 1)
-		map->key_123 = 0;
-	if (key == 124 && map->key_124== 1)
-		map->key_124 = 0;
-	if (key == 1 && map->key_s == 1)
-		map->key_s = 0;
-	if (key == 13 && map->key_w == 1)
-		map->key_w = 0;
-	if (key == 2 && map->key_right == 1)
-		map->key_right = 0;
-	if (key == 0 && map->key_left == 1)
-		map->key_left = 0;
-	return(1);
-}
-
 void	ft_player_2d(t_parser *map)
 {
 	int i;
@@ -66,8 +23,8 @@ void	ft_player_2d(t_parser *map)
 		j = 0;
 		while (map->map[i][j])
 		{
-			if (map->map[i][j] == 'N' || map->map[i][j] == 'S' || map->map[i][j] == 'E'
-			|| map->map[i][j] == 'W')
+			if (map->map[i][j] == 'N' || map->map[i][j] == 'S'
+			|| map->map[i][j] == 'E' || map->map[i][j] == 'W')
 			{
 				map->flag = map->map[i][j];
 				dir_player(map);
@@ -82,50 +39,15 @@ void	ft_player_2d(t_parser *map)
 	}
 }
 
-int		key_press(t_parser *map)
+void	my_mlx_pixel_put(t_parser *map, int x, int y, int color)
 {
-	if (map->key_s == 1)
-	{
-		map->x1 -= cos(map->p_angle) * 3;
-		map->y1 += sin(map->p_angle) * 3;
-	}
-	if (map->key_w == 1)
-	{
-		map->x1 += cos(map->p_angle) * 3;
-		map->y1 -= sin(map->p_angle) * 3;
-	}
-	if (map->key_right == 1)
-	{
-		map->x1 += sin(map->p_angle) * 3;
-		map->y1 += cos(map->p_angle) * 3;
-	}
-	if (map->key_left == 1)
-	{
-		map->x1 -= sin(map->p_angle) * 3;
-		map->y1 -= cos(map->p_angle) * 3;
-	}
-	if (map->key_ex == 1)
-		exit(0);
-	if (map->key_123 == 1)
-	{
-		map->p_angle += M_PI / 90;
-	}
-	if (map->key_124 == 1)
-	{
-		map->p_angle -= M_PI / 90;
-	}
-	draw_all(map);
-	return (0);
-}
-
-void            my_mlx_pixel_put(t_parser *map, int x, int y, int color)
-{
-    char    *dst;
+	char	*dst;
 
 	if (y < map->height && x < map->width && y >= 0 && x >= 0)
 	{
-		dst = map->addr + (y * map->line_length + x * (map->bits_per_pixel / 8));
-		*(unsigned int *) dst = color;
+		dst = map->addr + (y * map->line_length + x
+				* (map->bits_per_pixel / 8));
+		*(unsigned int *)dst = color;
 	}
 }
 
@@ -136,14 +58,13 @@ void	draw_all(t_parser *map)
 		write(1, "invalid map\n", 12);
 		exit(0);
 	}
-	 if (map->map[(int)map->y1/CUB_SIZE][(int)map->x1/CUB_SIZE] == '1')
-	 {
-	  	map->x1 = map->x;
-	  	map->y1 = map->y;
-	 }
-	 map->x = map->x1;
-	 map->y = map->y1;
-
+	if (map->map[(int)map->y1 / CUB_SIZE][(int)map->x1 / CUB_SIZE] == '1')
+	{
+		map->x1 = map->x;
+		map->y1 = map->y;
+	}
+	map->x = map->x1;
+	map->y = map->y1;
 	raycasting(map);
 	if (map->sprite != NULL)
 		calc_sprite(map);

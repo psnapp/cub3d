@@ -14,18 +14,19 @@
 
 int		parse_map(t_parser *map, char *line)
 {
-	map->map = ft_add_line_to_array(map, line);
+	if (!(map->map = ft_add_line_to_array(map, line)))
+		return (0);
 	map->count++;
 	return (1);
 }
 
-char		**ft_add_line_to_array(t_parser *map, char *line)
+char	**ft_add_line_to_array(t_parser *map, char *line)
 {
 	char	**arr;
 	int		i;
 
 	i = 0;
-	if(!(arr = (char **)malloc(sizeof(char *) * (map->count + 2))))
+	if (!(arr = (char **)malloc(sizeof(char *) * (map->count + 2))))
 		return (NULL);
 	ft_bzero(arr, sizeof(char *) * (map->count + 2));
 	while (i < map->count)
@@ -35,5 +36,6 @@ char		**ft_add_line_to_array(t_parser *map, char *line)
 	}
 	map->max_line = ft_strlen(line);
 	arr[i] = line;
-	return(arr);
+	free(map->map);
+	return (arr);
 }

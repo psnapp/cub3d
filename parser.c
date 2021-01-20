@@ -12,12 +12,9 @@
 
 #include "cub3d.h"
 
-int		parser(t_parser *map)
+int		parser(t_parser *map, char *line)
 {
-	char	*line;
-
 	while (get_next_line(map->fd, &line) > 0)
-	{
 		if (line[0] == 'R' && line[1] == ' ')
 			parse_wh(map, line);
 		else if (line[0] == 'S' && line[1] == 'O' && line[2] == ' ')
@@ -36,19 +33,23 @@ int		parser(t_parser *map)
 			parse_cf(map, line, 'F');
 		else if (line[0] == '1' || line[0] == ' ')
 			parse_map(map, line);
-	}
+		else
+			free(line);
 	check(map);
+	free(line);
 	return (1);
 }
 
-int     check(t_parser *map)
+int		check(t_parser *map)
 {
-    if (!map->str_s || !map->str_so || !map->str_ea || !map->str_no || !map->str_we || !map->map)
-    {
-        write(1, "invalid map\n", 12);
-        exit(0);
-    }
-    map->dist_wall = (int *)malloc(map->width * sizeof(int));
+	if (!map->str_s || !map->str_so || !map->str_ea ||
+	!map->str_no || !map->str_we || !map->map)
+	{
+		write(1, "invalid map\n", 12);
+		free(map->map);
+		exit(0);
+	}
+	map->dist_wall = (int *)malloc(map->width * sizeof(int));
 }
 
 int		check_map(int h, int x, int y, char **map_check)
@@ -57,7 +58,8 @@ int		check_map(int h, int x, int y, char **map_check)
 		return (0);
 	if (map_check[y][x] == '1')
 		return (1);
-	else if (y == 0 || y == h || x == 0 || (size_t)x == ft_strlen(map_check[y]) - 1)
+	else if (y == 0 || y == h || x == 0 ||
+	(size_t)x == ft_strlen(map_check[y]) - 1)
 		return (0);
 	if (map_check[y][x] == '*')
 		return (1);
